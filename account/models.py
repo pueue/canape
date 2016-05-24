@@ -40,14 +40,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 				unique=True,
 	)
 	username = models.CharField(
-				max_length=20
+				max_length=20,
 	)
 	image = models.ImageField(
-				upload_to='image/profile/'
+				upload_to='image/profile/',
 	)
 
 	is_active = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
+
+	created_at = models.DateTimeField(auto_now=True, auto_now_add=False)
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']
