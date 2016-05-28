@@ -7,11 +7,5 @@ def signup(request):
 def signup_confirm(request):
 	return render(request, 'signup_confirm.html', {})
 
-def login(request):
-	return render(request, 'login.html', {})
-
-def logout(request):
-	pass
-
 def profile(request):
 	return render(request, 'profile.html', {})
