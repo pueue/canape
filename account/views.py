@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SignupForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from .models import User
 
 # Create your views here.
 def signup(request):
@@ -16,5 +17,9 @@ def signup(request):
 def signup_confirm(request):
 	return render(request, 'signup_confirm.html', {})
 
-def profile(request):
-	return render(request, 'profile.html', {})
+def profile(request, username):
+	try:
+		user = User.objects.get(username=username)
+	except User.DoesNotExist:
+		return redirect('home')
+	return render(request, 'profile.html', {'user': user})
