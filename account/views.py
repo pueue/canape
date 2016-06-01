@@ -3,6 +3,7 @@ from .forms import SignupForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import User
+from postage.models import Postage, Code;
 
 # Create your views here.
 def signup(request):
@@ -20,6 +21,13 @@ def signup_confirm(request):
 def profile(request, username):
 	try:
 		user = User.objects.get(username=username)
+		works = Postage.objects.filter(maker=user)
+		achievements = Code.objects.filter(gainer=user)
 	except User.DoesNotExist:
 		return redirect('home')
-	return render(request, 'profile.html', {'user': user})
+	contents = {
+		'user': user,
+		'works': works,
+		'achievements': achievements,
+	}
+	return render(request, 'profile.html', contents)

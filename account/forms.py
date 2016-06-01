@@ -36,14 +36,16 @@ class SignupForm(UserCreationForm):
 
 # class LoginForm(AuthenticationForm):
 # 	username = forms.CharField(label="Username",
-# 		max_length=30,
-# 		width=forms.TextInput(attrs={
+# 		max_length=20,
+# 		widget=forms.TextInput(attrs={
 # 			'placeholder': 'Username',
 # 			'required': 'True',
+# 			'class': "form-control",
 # 		}))
 # 	password = forms.CharField(label="Password",
 # 		strip=False,
 # 		widget=forms.PasswordInput(attrs={
 # 			'placeholder': 'Password',
 # 			'required': 'True',
+# 			'class': "form-control",
 # 		}))
