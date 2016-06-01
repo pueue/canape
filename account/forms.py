@@ -11,22 +11,26 @@ class SignupForm(UserCreationForm):
 		widget=forms.TextInput(attrs={
 		    'placeholder': 'Username',
 		    'required': 'true',
+			'class': 'form-control',
         }))
 	email = forms.EmailField(widget=forms.EmailInput(attrs={
 			'placeholder': 'Email',
 			'required': 'True',
+			'class': 'form-control',
 		}))
 	password1 = forms.CharField(label="Password",
 		strip=False,
 		widget=forms.PasswordInput(attrs={
 		    'placeholder': 'Password',
 		    'required': 'true',
+			'class': 'form-control',
 	    }),)
 	password2 = forms.CharField(label="Password confirmation",
 		strip=False,
 		widget=forms.PasswordInput(attrs={
 		        'placeholder': 'Password confirmation',
 		        'required': 'true',
+				'class': 'form-control',
 	    }),
 		help_text = "Enter the same password as above, for verification.")
 

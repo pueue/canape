@@ -14,10 +14,14 @@ def signup(request):
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect(reverse("signup_confirm"))
-	return render(request, 'signup.html', {"form": form,})
+	context = {
+		'form': form,
+	}
+	return render(request, 'signup.html', context)
 
 def signup_confirm(request):
-	return render(request, 'signup_confirm.html', {})
+	context = {}
+	return render(request, 'signup_confirm.html', context)
 
 def login(request):
 	form = LoginForm()
@@ -30,7 +34,10 @@ def login(request):
 				return HttpResponseRedirect(reverse("home"))
 			else:
 				return HttpResponseRedirect(reverse("login"))
-	return render(request, 'login.html', {"form": form,})
+	context = {
+		'form': form,
+	}
+	return render(request, 'login.html', context)
 
 def profile(request, username):
 	try:

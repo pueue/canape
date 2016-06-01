@@ -3,4 +3,5 @@ from postage.models import Postage
 from account.models import User
 
 def home(request):
-	return render(request, 'home.html', {})
+	context = {}
+	return render(request, 'home.html', context)
