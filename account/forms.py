@@ -34,18 +34,18 @@ class SignupForm(UserCreationForm):
 		model = User
 		fields = ("username", "email", "password1", "password2",)
 
-# class LoginForm(AuthenticationForm):
-# 	username = forms.CharField(label="Username",
-# 		max_length=20,
-# 		widget=forms.TextInput(attrs={
-# 			'placeholder': 'Username',
-# 			'required': 'True',
-# 			'class': "form-control",
-# 		}))
-# 	password = forms.CharField(label="Password",
-# 		strip=False,
-# 		widget=forms.PasswordInput(attrs={
-# 			'placeholder': 'Password',
-# 			'required': 'True',
-# 			'class': "form-control",
-# 		}))
+class LoginForm(AuthenticationForm):
+	username = forms.CharField(label="Username",
+		max_length=20,
+		widget=forms.TextInput(attrs={
+			'placeholder': 'Username',
+			'required': 'True',
+			'class': 'form-control',
+		}))
+	password = forms.CharField(label="Password",
+		strip=False,
+		widget=forms.PasswordInput(attrs={
+			'placeholder': 'Password',
+			'required': 'True',
+			'class': 'form-control',
+		}))
