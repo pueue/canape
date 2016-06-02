@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     url(r'', include('account.urls')),
-    # url(r'', include('postage.urls')),
+    url(r'', include('postage.urls')),
 
     url(r'^$', views.home, name='home'),
 
