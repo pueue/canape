@@ -26,7 +26,7 @@ def signup_confirm(request):
 def login(request):
 	form = LoginForm()
 	if request.method == "POST":
-		form = LoginForm(request.POST)
+		form = LoginForm(data=request.POST)
 		if form.is_valid():
 			user = form.get_user()
 			if user is not None:
