@@ -9,11 +9,29 @@ class PostageForm(forms.ModelForm):
 		    'required': 'true',
 			'class': 'form-control',
         }))
-	image = forms.ImageField(label="Image",)
-	description = forms.CharField(label="Description")
-	is_transferable = forms.BooleanField(label="is_transferable")
-	is_limit = forms.BooleanField(label="is_limit")
-	quantity = forms.IntegerField(label="quantity")
+	image = forms.ImageField(label="Image",
+		widget=forms.FileInput(attrs={
+			'required': 'true',
+			'class': 'form-control',
+		}))
+	description = forms.CharField(label="Description",
+		widget=forms.TextInput(attrs={
+			'placeholder': 'description',
+			'required': 'true',
+			'class': 'form-control',
+		}))
+	is_transferable = forms.BooleanField(label="is_transferable",
+		widget=forms.CheckboxInput(attrs={
+			'class': 'form-control',
+		}))
+	is_limit = forms.BooleanField(label="is_limit",
+		widget=forms.CheckboxInput(attrs={
+			'class': 'form-control',
+		}))
+	quantity = forms.IntegerField(label="quantity",
+		widget=forms.NumberInput(attrs={
+			'class': 'form-control',
+		}))
 
 	class Meta:
 		model = Postage

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form id="signup" method="post" action="{% url 'postageCreate' %}">
+<form enctype="multipart/form-data" id="signup" method="post" action="{% url 'postageCreate' %}">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<input type="submit" value="Create" />
+	<input type="submit" value="Create" class='form-control' />
 </form>
 {% endblock %}
