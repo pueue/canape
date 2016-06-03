@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import PostageForm
 from .models import Postage
 from django.http import HttpResponseRedirect
@@ -20,5 +20,13 @@ def postageCreate(request):
 	}
 	return render(request, 'postageCreate.html', context)
 
-# def postageDetail(request):
-# 	return render(request, 'postageDetail.html', {})
+def postageDetail(request, postage_id):
+	try:
+		postage = Postage.objects.get(id=postage_id);
+	except Postage.DoesNotExist:
+		return redirect('home')
+
+	context = {
+		'postage': postage,
+	}
+	return render(request, 'postageDetail.html', context)
