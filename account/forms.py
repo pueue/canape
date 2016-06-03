@@ -15,7 +15,7 @@ class SignupForm(UserCreationForm):
         }))
 	email = forms.EmailField(widget=forms.EmailInput(attrs={
 			'placeholder': 'Email',
-			'required': 'True',
+			'required': 'true',
 			'class': 'form-control',
 		}))
 	password1 = forms.CharField(label="Password",
@@ -43,13 +43,40 @@ class LoginForm(AuthenticationForm):
 		max_length=20,
 		widget=forms.TextInput(attrs={
 			'placeholder': 'Username',
-			'required': 'True',
+			'required': 'true',
 			'class': 'form-control',
 		}))
 	password = forms.CharField(label="Password",
 		strip=False,
 		widget=forms.PasswordInput(attrs={
 			'placeholder': 'Password',
-			'required': 'True',
+			'required': 'true',
 			'class': 'form-control',
 		}))
+
+class settingsForm(forms.ModelForm):
+	username = forms.CharField(label="Username",
+		widget=forms.TextInput(attrs={
+			'class': 'form-control',
+			'readonly': 'true',
+        }))
+	email = forms.EmailField(label="Email",
+		required=True,
+		widget=forms.EmailInput(attrs={
+			'placeholder': 'Email',
+			'class': 'form-control',
+		}))
+	image = forms.ImageField(label="Image",
+		required=False,
+		widget=forms.FileInput(attrs={
+			'class': 'form-control',
+		}))
+	description = forms.CharField(label="Description",
+		required=False,
+		widget=forms.TextInput(attrs={
+			'placeholder': 'Description',
+			'class': 'form-control',
+		}))
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'image', 'description', )

@@ -13,5 +13,7 @@ urlpatterns = [
 	url(r'^logout/$', auth_views.logout, {
 			'next_page': 'login',
 		}, name='logout'),
-	url(r'^profile/(?P<username>\w+)/$', views.profile, name='profile'),
+	url(r'^settings/$', views.settings, name='settings'),
+
+	url(r'^(?P<username>\w+)/$', views.profile, name='profile'),
 ]

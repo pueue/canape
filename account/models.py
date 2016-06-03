@@ -45,9 +45,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     image = models.ImageField(
                 upload_to='image/profile/',
+                blank=True,
     )
 
-    description = models.TextField()
+    description = models.TextField(blank=True,)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
