@@ -24,12 +24,19 @@
 				<a href="/" class="navbar-brand">Postagio</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/">Home</a></li>
+                {% if request.user.is_authenticated %}
 				<li><a href="/{{ request.user.username }}">Profile</a></li>
+                {% endif %}
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
 				<li><a href="/signup">Sign Up</a></li>
 				<li><a href="/login">Login</a></li>
+                {% endif %}
 			</ul>
 		</div>
     </nav>
