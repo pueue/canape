@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock css %}
+
 {% block content %}
-<form method="post" action="{% url 'login' %}">
+<form class="form-signin" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Create" class='form-control' />
+	<h2 class="form-signin-heading">Login</h2>
+	{% for field in form %}
+	<label for="{{ field.name }}" class="sr-only">{{ field.label }}</label>
+	{{ field }}
+	{% endfor %}
+	<div class="checkbox">
+    	<label>
+    		<input type="checkbox" value="remember_me"> Remember me
+    	</label>
+    </div>
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 </form>
 {% endblock %}

@@ -51,6 +51,7 @@ class LoginForm(AuthenticationForm):
 			'placeholder': 'Username',
 			'required': 'true',
 			'class': 'form-control',
+			'autofocus': 'true'
 		}))
 	password = forms.CharField(label="Password",
 		strip=False,
