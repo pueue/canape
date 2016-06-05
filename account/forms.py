@@ -18,6 +18,12 @@ class SignupForm(UserCreationForm):
 			'required': 'true',
 			'class': 'form-control',
 		}))
+	name = forms.CharField(label="Name",
+		widget=forms.TextInput(attrs={
+			'placeholder': 'Name',
+			'required': 'true',
+			'class': 'form-control',
+		}))
 	password1 = forms.CharField(label="Password",
 		strip=False,
 		widget=forms.PasswordInput(attrs={
@@ -36,7 +42,7 @@ class SignupForm(UserCreationForm):
 
 	class Meta:	# ModelForm은 class Meta를 반드시 정의해줘야 한다.
 		model = User
-		fields = ("username", "email", "password1", "password2",)
+		fields = ("username", "email", "name", "password1", "password2",)
 
 class LoginForm(AuthenticationForm):
 	username = forms.CharField(label="Username",
@@ -66,6 +72,12 @@ class settingsForm(forms.ModelForm):
 			'placeholder': 'Email',
 			'class': 'form-control',
 		}))
+	name = forms.CharField(label="Name",
+		widget=forms.TextInput(attrs={
+			'placeholder': 'Name',
+			'required': 'true',
+			'class': 'form-control',
+		}))
 	image = forms.ImageField(label="Image",
 		required=False,
 		widget=forms.FileInput(attrs={
@@ -79,4 +91,4 @@ class settingsForm(forms.ModelForm):
 		}))
 	class Meta:
 		model = User
-		fields = ('username', 'email', 'image', 'description', )
+		fields = ('username', 'email', 'name', 'image', 'description', )

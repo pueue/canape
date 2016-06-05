@@ -1,24 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ user.username }}
-{{ user.email }}
-{% if user.image %}
-<img src="{{ user.image.url }}" alt="" />
-{% endif %}
-{{ user.description }}
+<div class="user_info">
+	<h1>{{ user.name }}</h1>
+	<h3>{{ user.username }}</h3>
+	<div class="email">{{ user.email }}</div>
+	<div class="user_image">
+		{% if user.image %}
+		<img src="{{ user.image.url }}" alt="" />
+		{% endif %}
+	</div>
+	<div class="user_description">{{ user.description }}</div>
+</div>
 
-achievements
-{% for achieve in achievements %}
-{{ achieve.postage.title }}
-{{ achieve.postage.description }}
-<img src="{{ achieve.postage.image.url }}" alt="" />
-{% endfor %}
+<div class="achievements">
+	<h1>Achievements</h1>
+	<div class="achievement_list">
+		{% for code in achievements %}
+		<div class="achievement">
+			<h3>{{ code.postage.title }}</h3>
+			<div>{{ code.postage.description }}</div>
+			<div><img src="{{ code.postage.image.url }}" alt="" /></div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 
-works
-{% for work in works %}
-{{ work.title }}
-{{ work.description }}
-<img src="{{ work.postage.image.url }}" alt="" />
-{% endfor %}
+<div class="works">
+	<h1>Works</h1>
+	<div class="work_list">
+		{% for postage in works %}
+		<div class="work">
+			<h3>{{ postage.title }}</h3>
+			<div>{{ postage.description }}</div>
+			<div><img src="{{ postage.image.url }}" alt="" /></div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}

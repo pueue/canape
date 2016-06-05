@@ -11,10 +11,10 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         user = self.model(
-                email=self.normalize_email(email),
-                username=username,
-                is_active=True,
-                **kwargs
+            email=self.normalize_email(email),
+            username=username,
+            is_active=True,
+            **kwargs
         )
         user.set_password(password)
         user.save()
@@ -22,12 +22,12 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, username, password, **kwargs):
         user = self.model(
-                    email=self.normalize_email(email),
-                    username=username,
-                    is_staff=True,
-                    is_superuser=True,
-                    is_active=True,
-                    **kwargs
+            email=self.normalize_email(email),
+            username=username,
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            **kwargs
         )
         user.set_password(password)
         user.save()
@@ -35,17 +35,21 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(
-                max_length=254,
-                unique=True,
-    )
     username = models.CharField(
-                max_length=20,
-                unique=True,
+        max_length=20,
+        unique=True,
+    )
+    email = models.EmailField(
+        max_length=254,
+        unique=True,
+    )
+    name = models.CharField(
+        max_length=20,
+        blank=False,
     )
     image = models.ImageField(
-                upload_to='image/profile/',
-                blank=True,
+        upload_to='image/profile/',
+        blank=True,
     )
 
     description = models.TextField(blank=True,)
