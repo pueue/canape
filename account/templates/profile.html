@@ -1,39 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="user_info">
-	<h1>{{ user.name }}</h1>
-	<h3>{{ user.username }}</h3>
-	<div class="email">{{ user.email }}</div>
-	<div class="user_image">
+<div class="profile">
+	<h1 class="profile_name">{{ user.name }} <small>{{ user.username }}</small></h1>
+	<div class="profile_email">{{ user.email }}</div>
+	<div class="profile_image">
 		{% if user.image %}
 		<img src="{{ user.image.url }}" alt="" />
 		{% endif %}
 	</div>
-	<div class="user_description">{{ user.description }}</div>
+	<div class="profile_description">{{ user.description }}</div>
 </div>
 
 <div class="achievements">
-	<h1>Achievements</h1>
-	<div class="achievement_list">
+	<h3>Achievements</h3>
+	<div class="achievement_list row">
 		{% for code in achievements %}
-		<div class="achievement">
-			<h3>{{ code.postage.title }}</h3>
-			<div>{{ code.postage.description }}</div>
-			<div><img src="{{ code.postage.image.url }}" alt="" /></div>
+		<div class="achievement col-sm-2 col-md-2">
+			<div><img class="img-responsive" src="{{ code.postage.image.url }}" alt="{{ code.postage.description }}" /></div>
+			<h5 class="text-center">{{ code.postage.title }}</h5>
+
 		</div>
 		{% endfor %}
 	</div>
 </div>
 
 <div class="works">
-	<h1>Works</h1>
-	<div class="work_list">
+	<h3>Works</h3>
+	<div class="work_list row">
 		{% for postage in works %}
-		<div class="work">
-			<h3>{{ postage.title }}</h3>
-			<div>{{ postage.description }}</div>
-			<div><img src="{{ postage.image.url }}" alt="" /></div>
+		<div class="work col-sm-2 col-md-2">
+			<div><img class="img-responsive" src="{{ postage.image.url }}" alt="{{ postage.description }}" /></div>
+			<h5 class="text-center">{{ postage.title }}</h5>
 		</div>
 		{% endfor %}
 	</div>
