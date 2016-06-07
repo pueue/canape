@@ -62,11 +62,6 @@ class LoginForm(AuthenticationForm):
 		}))
 
 class settingsForm(forms.ModelForm):
-	username = forms.CharField(label="Username",
-		widget=forms.TextInput(attrs={
-			'class': 'form-control',
-			'readonly': 'true',
-        }))
 	email = forms.EmailField(label="Email",
 		required=True,
 		widget=forms.EmailInput(attrs={
@@ -92,4 +87,4 @@ class settingsForm(forms.ModelForm):
 		}))
 	class Meta:
 		model = User
-		fields = ('username', 'email', 'name', 'image', 'description', )
+		fields = ('email', 'name', 'image', 'description', )
