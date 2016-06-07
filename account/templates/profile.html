@@ -16,11 +16,12 @@
 	<h3>Achievements</h3>
 	<div class="achievement_list row">
 		{% for code in achievements %}
-		<div class="achievement col-sm-2 col-md-2">
-			<div><img class="img-responsive" src="{{ code.postage.image.url }}" alt="{{ code.postage.description }}" /></div>
-			<h5 class="text-center">{{ code.postage.title }}</h5>
-
-		</div>
+		<a href="/detail/{{ code.postage.id }}">
+			<div class="achievement col-sm-2 col-md-2">
+				<div><img class="img-responsive" src="{{ code.postage.image.url }}" alt="{{ code.postage.description }}" /></div>
+				<h5 class="text-center">{{ code.postage.title }}</h5>
+			</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>
@@ -29,10 +30,12 @@
 	<h3>Works</h3>
 	<div class="work_list row">
 		{% for postage in works %}
-		<div class="work col-sm-2 col-md-2">
-			<div><img class="img-responsive" src="{{ postage.image.url }}" alt="{{ postage.description }}" /></div>
-			<h5 class="text-center">{{ postage.title }}</h5>
-		</div>
+		<a href="/detail/{{ postage.id }}">
+			<div class="work col-sm-2 col-md-2">
+				<div><img class="img-responsive" src="{{ postage.image.url }}" alt="{{ postage.description }}" /></div>
+				<h5 class="text-center">{{ postage.title }}</h5>
+			</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>
