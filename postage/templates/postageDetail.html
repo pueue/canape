@@ -8,4 +8,7 @@
 		<img src="{{ postage.image.url }}" alt="" />
 	</div>
 </div>
+{% if request.user == postage.maker %}
+<a class="btn btn-primary" href="/edit/{{ postage.id }}" role="button">Edit</a>
+{% endif %}
 {% endblock %}

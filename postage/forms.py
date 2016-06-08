@@ -1,23 +1,23 @@
 from django import forms
 from .models import Postage
 
-class PostageForm(forms.ModelForm):
+class CreateForm(forms.ModelForm):
 	title = forms.CharField(label="Title",
 		max_length=200,
+		required=True,
 		widget=forms.TextInput(attrs={
 		    'placeholder': 'title',
-		    'required': 'true',
 			'class': 'form-control',
         }))
 	image = forms.ImageField(label="Image",
+		required=True,
 		widget=forms.FileInput(attrs={
-			'required': 'true',
 			'class': 'form-control',
 		}))
 	description = forms.CharField(label="Description",
+		required=True,
 		widget=forms.TextInput(attrs={
 			'placeholder': 'description',
-			'required': 'true',
 			'class': 'form-control',
 		}))
 	is_transferable = forms.BooleanField(label="is_transferable",
@@ -54,3 +54,32 @@ class PostageForm(forms.ModelForm):
 			if not self.cleaned_data.get(field, ''):
 				msg = forms.ValidationError("This field is required.")
 				self.add_error(field, msg)
+
+class EditForm(forms.ModelForm):
+	title = forms.CharField(label="Title",
+		max_length=200,
+		required=True,
+		widget=forms.TextInput(attrs={
+		    'placeholder': 'title',
+			'class': 'form-control',
+        }))
+	image = forms.ImageField(label="Image",
+		required=False,
+		widget=forms.FileInput(attrs={
+			'class': 'form-control',
+		}))
+	description = forms.CharField(label="Description",
+		required=True,
+		widget=forms.TextInput(attrs={
+			'placeholder': 'description',
+			'class': 'form-control',
+		}))
+	is_transferable = forms.BooleanField(label="is_transferable",
+		required=False,
+		widget=forms.CheckboxInput(attrs={
+			'class': 'form-control',
+		}))
+
+	class Meta:
+		model = Postage
+		fields = ("title", "image", "description", "is_transferable",)
