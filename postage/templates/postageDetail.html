@@ -4,6 +4,9 @@
 <div class="postage">
 	<h1 class="postage_title"> {{ postage.title }}</h1>
 	<div class="postage_description">{{ postage.description }}</div>
+	<div class="postage_quantity">
+		Residual quantity: {{ residual_quantity }}/{{ postage.quantity }}
+	</div>
 	<div class="postage_image">
 		<img src="{{ postage.image.url }}" alt="" />
 	</div>

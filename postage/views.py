@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CreateForm, EditForm
-from .models import Postage
+from .models import Postage, Code
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -26,11 +26,14 @@ def postageCreate(request):
 def postageDetail(request, postage_id):
 	try:
 		postage = Postage.objects.get(id=postage_id);
+		used_quantity = Code.objects.filter(postage=postage).count();
+		residual_quantity = postage.quantity - used_quantity;
 	except Postage.DoesNotExist:
 		return redirect('home')
 
 	context = {
 		'postage': postage,
+		'residual_quantity': residual_quantity,
 	}
 	return render(request, 'postageDetail.html', context)
 
