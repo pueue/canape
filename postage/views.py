@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateForm, EditForm
 from .models import Postage, Code
 from django.core.urlresolvers import reverse
@@ -24,12 +24,9 @@ def postageCreate(request):
 	return render(request, 'postageCreate.html', context)
 
 def postageDetail(request, postage_id):
-	try:
-		postage = Postage.objects.get(id=postage_id);
-		used_quantity = Code.objects.filter(postage=postage).count();
-		residual_quantity = postage.quantity - used_quantity;
-	except Postage.DoesNotExist:
-		return redirect('home')
+	postage = get_object_or_404(Postage, id=postage_id);
+	used_quantity = Code.objects.filter(postage=postage).count();
+	residual_quantity = postage.quantity - used_quantity;
 
 	context = {
 		'postage': postage,
@@ -58,8 +55,8 @@ def postageEdit(request, postage_id):
 	}
 	return render(request, 'postageEdit.html', context)
 
-def postageDelete(request, postage_id):
 	postage = Postage.objects.get(pk=postage_id)
+def postageDelete(request, postage_id):
 	if postage.maker != request.user:
 		return redirect('home')
 
@@ -67,3 +64,10 @@ def postageDelete(request, postage_id):
 	return HttpResponseRedirect(reverse("profile", kwargs={
 		'username': request.user.username,
 	}))
+
+def codeDetail(request, code_id):
+	code = get_object_or_404(Code, id=code_id)
+	context = {
+		'code': code,
+	}
+	return render(request, 'codeDetail.html', context);

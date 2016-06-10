@@ -16,7 +16,7 @@
 	<h3>Achievements</h3>
 	<div class="achievement_list row">
 		{% for code in achievements %}
-		<a href="/detail/{{ code.postage.id }}">
+		<a href="/code/{{ code.id }}">
 			<div class="achievement col-sm-2 col-md-2">
 				<div><img class="img-responsive" src="{{ code.postage.image.url }}" alt="{{ code.postage.description }}" /></div>
 				<h5 class="text-center">{{ code.postage.title }}</h5>
@@ -28,6 +28,7 @@
 
 <div class="works">
 	<h3>Works</h3>
+	<a href="{% url 'postageCreate' %}" class="btn btn-primary" role="button">Create</a>
 	<div class="work_list row">
 		{% for postage in works %}
 		<a href="/detail/{{ postage.id }}">

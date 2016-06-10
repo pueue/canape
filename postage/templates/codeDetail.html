@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="postage">
+	<h1 class="postage_title"> {{ code.postage.title }}</h1>
+	<div class="postage_description">{{ code.postage.description }}</div>
+	<div class="code_serial">
+		Serial: {{ code.serial }}
+	</div>
+	<div class="postage_image">
+		<img src="{{ code.postage.image.url }}" alt="" />
+	</div>
+</div>
+{% endblock %}
