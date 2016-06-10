@@ -7,19 +7,19 @@
 
 {% block content %}
 <form class="form-signin" method="post" action="{% url 'login' %}">
-	{% csrf_token %}
-	<h2 class="form-signin-heading">Login</h2>
-	<div class="form-group">
-	{% for field in form %}
-		<label for="{{ field.name }}" class="sr-only">{{ field.label }}</label>
-		{{ field }}
-	{% endfor %}
-	</div>
-	<!-- <div class="checkbox">
-    	<label>
-    		<input type="checkbox" name="remember_me"> Remember me
-    	</label>
+    {% csrf_token %}
+    <h2 class="form-signin-heading">Login</h2>
+    <div class="form-group">
+    {% for field in form %}
+        <label for="{{ field.name }}" class="sr-only">{{ field.label }}</label>
+        {{ field }}
+    {% endfor %}
+    </div>
+    <!-- <div class="checkbox">
+        <label>
+            <input type="checkbox" name="remember_me"> Remember me
+        </label>
     </div> -->
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 </form>
 {% endblock %}

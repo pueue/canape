@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
         PermissionsMixin
 )
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password, **kwargs):
         if not email:
@@ -65,5 +66,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.email
+
     def get_short_name(self):
         return self.email
