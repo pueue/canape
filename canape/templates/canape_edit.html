@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="postage_image">
-    <img src="{{ postage.image.url }}" alt="" />
+<div class="canape_image">
+    <img src="{{ canape.image.url }}" alt="" />
 </div>
-<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'postage_edit' postage_id=postage.id %}">
+<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'canape_edit' canape_id=canape.id %}">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">
@@ -15,7 +15,7 @@
     </div>
     {% endfor %}
     <button class="btn btn-lg btn-primary" type="submit">Update</button>
-    <a class="btn btn-lg btn-danger" href="{% url 'postageDelete' postage_id=postage.id %}" role="button">Delete</a>
+    <a class="btn btn-lg btn-danger" href="{% url 'canape_delete' canape_id=canape.id %}" role="button">Delete</a>
 
 </form>
 {% endblock %}

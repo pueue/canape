@@ -18,8 +18,8 @@
         {% for code in achievements %}
         <a href="/code/{{ code.id }}">
             <div class="achievement col-sm-2 col-md-2">
-                <div><img class="img-responsive" src="{{ code.postage.image.url }}" alt="{{ code.postage.description }}" /></div>
-                <h5 class="text-center">{{ code.postage.title }}</h5>
+                <div><img class="img-responsive" src="{{ code.canape.image.url }}" alt="{{ code.canape.description }}" /></div>
+                <h5 class="text-center">{{ code.canape.title }}</h5>
             </div>
         </a>
         {% endfor %}
@@ -28,13 +28,13 @@
 
 <div class="works">
     <h3>Works</h3>
-    <a href="{% url 'postage_create' %}" class="btn btn-primary" role="button">Create</a>
+    <a href="{% url 'canape_create' %}" class="btn btn-primary" role="button">Create</a>
     <div class="work_list row">
-        {% for postage in works %}
-        <a href="/detail/{{ postage.id }}">
+        {% for canape in works %}
+        <a href="/detail/{{ canape.id }}">
             <div class="work col-sm-2 col-md-2">
-                <div><img class="img-responsive" src="{{ postage.image.url }}" alt="{{ postage.description }}" /></div>
-                <h5 class="text-center">{{ postage.title }}</h5>
+                <div><img class="img-responsive" src="{{ canape.image.url }}" alt="{{ canape.description }}" /></div>
+                <h5 class="text-center">{{ canape.title }}</h5>
             </div>
         </a>
         {% endfor %}

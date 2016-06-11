@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="canape">
+    <h1 class="canape_title"> {{ code.canape.title }}</h1>
+    <div class="canape_description">{{ code.canape.description }}</div>
+    <div class="code_serial">
+        Serial: {{ code.serial }}
+    </div>
+    <div class="canape_image">
+        <img src="{{ code.canape.image.url }}" alt="" />
+    </div>
+</div>
+{% endblock %}

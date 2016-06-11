@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 
-class Postage(models.Model):
+class Canape(models.Model):
     maker = models.ForeignKey(
                 settings.AUTH_USER_MODEL,
                 on_delete=models.CASCADE,
@@ -11,7 +11,7 @@ class Postage(models.Model):
                 max_length=200,
     )
     image = models.ImageField(
-                upload_to='image/postage/',
+                upload_to='image/canape/',
     )
     description = models.TextField()
     is_transferable = models.BooleanField(default=False)
@@ -26,8 +26,8 @@ class Code(models.Model):
                 settings.AUTH_USER_MODEL,
                 on_delete=models.CASCADE,
     )
-    postage = models.ForeignKey(
-                Postage,
+    canape = models.ForeignKey(
+                Canape,
                 on_delete=models.CASCADE,
     )
     code = models.CharField(

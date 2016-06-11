@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="canape">
+    <h1 class="canape_title"> {{ canape.title }}</h1>
+    <div class="canape_description">{{ canape.description }}</div>
+    <div class="canape_quantity">
+        {% if canape.is_limit %}
+        Residual quantity: {{ residual_quantity }}/{{ canape.quantity }}
+        {% endif %}
+    </div>
+    <div class="canape_image">
+        <img src="{{ canape.image.url }}" alt="" />
+    </div>
+</div>
+{% if request.user == canape.maker %}
+<a class="btn btn-primary" href="/edit/{{ canape.id }}" role="button">Edit</a>
+{% endif %}
+{% endblock %}

@@ -3,7 +3,7 @@ from .forms import SignupForm, LoginForm, SettingsForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import User
-from postage.models import Postage, Code
+from canape.models import Canape, Code
 from django.contrib.auth.views import login as auth_login
 from django.contrib.auth.decorators import login_required
 
@@ -48,7 +48,7 @@ def login(request):
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    works = Postage.objects.filter(maker=user)
+    works = Canape.objects.filter(maker=user)
     achievements = Code.objects.filter(gainer=user)
 
     context = {

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from postage.models import Postage
+from canape.models import Canape
 from account.models import User
 
 

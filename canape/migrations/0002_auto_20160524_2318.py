@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('postage', '0001_initial'),
+        ('canape', '0001_initial'),
     ]
 
     operations = [
@@ -26,19 +26,19 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='postage',
+            model_name='canape',
             name='maker',
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='postage',
+            model_name='canape',
             name='image',
-            field=models.ImageField(upload_to='image/postage/'),
+            field=models.ImageField(upload_to='image/canape/'),
         ),
         migrations.AddField(
             model_name='code',
-            name='postage',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='postage.Postage'),
+            name='canape',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='canape.Canape'),
         ),
     ]

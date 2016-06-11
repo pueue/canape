@@ -1,4 +1,4 @@
-"""postagio URL Configuration
+"""Canape_prj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -22,7 +22,7 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'', include('postage.urls')),
+    url(r'', include('canape.urls')),
     url(r'', include('account.urls')),
 
     url(r'^$', views.home, name='home'),

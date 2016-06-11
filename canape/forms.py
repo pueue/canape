@@ -1,8 +1,8 @@
 from django import forms
-from .models import Postage
+from .models import Canape
 
 
-class CreateForm(forms.ModelForm):
+class CanapeCreateForm(forms.ModelForm):
     title = forms.CharField(
         label="Title",
         max_length=200,
@@ -45,7 +45,7 @@ class CreateForm(forms.ModelForm):
         help_text="Only required if 'is_limit' is selected.")
 
     class Meta:
-        model = Postage
+        model = Canape
         fields = ("title", "image", "description", "is_transferable", "is_limit", "quantity")
 
     def clean(self):
@@ -63,7 +63,7 @@ class CreateForm(forms.ModelForm):
                 self.add_error(field, msg)
 
 
-class EditForm(forms.ModelForm):
+class CanapeEditForm(forms.ModelForm):
     title = forms.CharField(
         label="Title",
         max_length=200,
@@ -93,5 +93,5 @@ class EditForm(forms.ModelForm):
         }))
 
     class Meta:
-        model = Postage
+        model = Canape
         fields = ("title", "image", "description", "is_transferable",)
