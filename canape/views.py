@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CanapeCreateForm, CanapeEditForm
-from .models import Canape, Code
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
+from .forms import CanapeCreateForm, CanapeEditForm
+from .models import Canape, Code
 
 @login_required
 def canape_create(request):

@@ -1,2 +1,2 @@
-# canape_prj
+# Canape
 Achievements & Verification platform on real world
