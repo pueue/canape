@@ -5,10 +5,10 @@ from django.views.generic import TemplateView
 # from .forms import LoginForm
 
 urlpatterns = [
-    url(r'^signup/$', views.signup, name='signup'),
-    url(r'^signup_confirm/$', TemplateView.as_view(
-            template_name="signup_confirm.html"
-        ), name='signup_confirm'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^register_confirm/$', TemplateView.as_view(
+            template_name="register_confirm.html"
+        ), name='register_confirm'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {
             'next_page': 'login',

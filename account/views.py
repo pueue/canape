@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignupForm, LoginForm, SettingsForm
+from .forms import RegisterForm, LoginForm, SettingsForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import User
@@ -8,23 +8,23 @@ from django.contrib.auth.views import login as auth_login
 from django.contrib.auth.decorators import login_required
 
 
-def signup(request):
+def register(request):
     if request.method == "POST":
-        form = SignupForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("signup_confirm"))
+            return HttpResponseRedirect(reverse("register_confirm"))
     else:
-        form = SignupForm()
+        form = RegisterForm()
     context = {
         'form': form,
     }
-    return render(request, 'signup.html', context)
+    return render(request, 'register.html', context)
 
 
-def signup_confirm(request):
+def register_confirm(request):
     context = {}
-    return render(request, 'signup_confirm.html', context)
+    return render(request, 'register_confirm.html', context)
 
 
 def login(request):

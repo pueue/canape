@@ -6,7 +6,7 @@
 {% endblock css %}
 
 {% block content %}
-<form class="form-signup form-horizontal" method="post" action="{% url 'signup' %}">
+<form class="form-signup form-horizontal" method="post" action="{% url 'register' %}">
     {% csrf_token %}
     <h2 class="form-signin-heading">Sign up</h2>
     {% for field in form %}

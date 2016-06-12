@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User
 
 
-class SignupForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
     username = forms.RegexField(
         label="Username",
         max_length=20,
