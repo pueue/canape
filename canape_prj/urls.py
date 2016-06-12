@@ -22,7 +22,7 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'', include('canape.urls')),
+    url(r'canape/', include('canape.urls')),
     url(r'', include('account.urls')),
 
     url(r'^$', views.home, name='home'),

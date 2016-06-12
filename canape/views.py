@@ -38,7 +38,7 @@ def canape_detail(request, canape_id):
 
 @login_required
 def canape_edit(request, canape_id):
-    canape = Canape.objects.get(pk=canape_id)
+    canape = get_object_or_404(Canape, id=canape_id)
     if canape.maker != request.user:
         return redirect('home')
 
@@ -59,7 +59,7 @@ def canape_edit(request, canape_id):
 
 
 def canape_delete(request, canape_id):
-    canape = Canape.objects.get(pk=canape_id)
+    canape = get_object_or_404(Canape, id=canape_id)
     if canape.maker != request.user:
         return redirect('home')
 
@@ -69,8 +69,9 @@ def canape_delete(request, canape_id):
     }))
 
 
-def code_detail(request, code_id):
-    code = get_object_or_404(Code, id=code_id)
+def code_detail(request, canape_id, code_serial):
+    canape = get_object_or_404(Canape, id=canape_id)
+    code = get_object_or_404(Code, canape=canape, serial=code_serial)
     context = {
         'code': code,
     }

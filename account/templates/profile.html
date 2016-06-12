@@ -16,7 +16,7 @@
     <h3>Achievements</h3>
     <div class="achievement_list row">
         {% for code in achievements %}
-        <a href="/code/{{ code.id }}">
+        <a href="{% url 'code_detail' canape_id=code.canape.id code_serial=code.serial %}">
             <div class="achievement col-sm-2 col-md-2">
                 <div><img class="img-responsive" src="{{ code.canape.image.url }}" alt="{{ code.canape.description }}" /></div>
                 <h5 class="text-center">{{ code.canape.title }}</h5>
@@ -31,7 +31,7 @@
     <a href="{% url 'canape_create' %}" class="btn btn-primary" role="button">Create</a>
     <div class="work_list row">
         {% for canape in works %}
-        <a href="/detail/{{ canape.id }}">
+        <a href="{% url 'canape_detail' canape_id=canape.id %}">
             <div class="work col-sm-2 col-md-2">
                 <div><img class="img-responsive" src="{{ canape.image.url }}" alt="{{ canape.description }}" /></div>
                 <h5 class="text-center">{{ canape.title }}</h5>
