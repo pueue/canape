@@ -28,7 +28,7 @@
 
 <div class="works">
     <h3>Works</h3>
-    <a href="{% url 'canape_create' %}" class="btn btn-primary" role="button">Create</a>
+    <a href="{% url 'canape_new' %}" class="btn btn-primary" role="button">Create</a>
     <div class="work_list row">
         {% for canape in works %}
         <a href="{% url 'canape_detail' canape_id=canape.id %}">

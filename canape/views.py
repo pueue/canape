@@ -3,14 +3,14 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
-from .forms import CanapeCreateForm, CanapeEditForm
+from .forms import CanapeNewForm, CanapeEditForm
 from .models import Canape, Code
 
 @login_required
-def canape_create(request):
-    form = CanapeCreateForm()
+def canape_new(request):
+    form = CanapeNewForm()
     if request.method == "POST":
-        form = CanapeCreateForm(request.POST, request.FILES)
+        form = CanapeNewForm(request.POST, request.FILES)
         if form.is_valid():
             canape = form.save(commit=False)
             canape.maker = request.user
@@ -21,7 +21,7 @@ def canape_create(request):
     context = {
         'form': form,
     }
-    return render(request, 'canape_create.html', context)
+    return render(request, 'canape_new.html', context)
 
 
 def canape_detail(request, canape_id):

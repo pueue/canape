@@ -14,6 +14,6 @@
     </div>
 </div>
 {% if request.user == canape.maker %}
-<a class="btn btn-primary" href="/edit/{{ canape.id }}" role="button">Edit</a>
+<a class="btn btn-primary" href="{% url 'canape_edit' canape_id=canape.id %}" role="button">Edit</a>
 {% endif %}
 {% endblock %}

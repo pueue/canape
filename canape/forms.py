@@ -2,7 +2,7 @@ from django import forms
 from .models import Canape
 
 
-class CanapeCreateForm(forms.ModelForm):
+class CanapeNewForm(forms.ModelForm):
     title = forms.CharField(
         label="Title",
         max_length=200,
