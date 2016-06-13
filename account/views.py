@@ -12,7 +12,12 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            User.objects.create_user(
+                email=form.cleaned_data['email'],
+                username=form.cleaned_data['username'],
+                name=form.cleaned_data['name'],
+                password=form.cleaned_data['password1'],
+            )
             return HttpResponseRedirect(reverse("register_confirm"))
     else:
         form = RegisterForm()
