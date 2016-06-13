@@ -25,6 +25,7 @@ class Code(models.Model):
     gainer = models.ForeignKey(
                 settings.AUTH_USER_MODEL,
                 on_delete=models.CASCADE,
+                null=True,
     )
     canape = models.ForeignKey(
                 Canape,

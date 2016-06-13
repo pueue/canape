@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'canape_create' %}">
+<form class="form-horizontal" action="{% url 'canape_new' %}" enctype="multipart/form-data" method="post"">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">

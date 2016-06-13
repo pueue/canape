@@ -2,19 +2,33 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 
 from .forms import CanapeNewForm, CanapeEditForm
 from .models import Canape, Code
+from .function import code_new
 
+@transaction.atomic
 @login_required
 def canape_new(request):
     form = CanapeNewForm()
     if request.method == "POST":
         form = CanapeNewForm(request.POST, request.FILES)
         if form.is_valid():
-            canape = form.save(commit=False)
-            canape.maker = request.user
-            canape.save()
+            try:
+                with transaction.atomic():
+                    canape = form.save(commit=False)
+                    canape.maker = request.user
+                    canape.save()
+                    codes = code_new(canape, canape.quantity)
+                    for serial, code in enumerate(codes):
+                        Code.objects.create(
+                            canape=canape,
+                            code=code,
+                            serial=serial+1,
+                        )
+            except:
+                return redirect('home')
             return HttpResponseRedirect(reverse("canape_detail", kwargs={
                 'canape_id': canape.id,
             }))
@@ -26,7 +40,7 @@ def canape_new(request):
 
 def canape_detail(request, canape_id):
     canape = get_object_or_404(Canape, id=canape_id)
-    used_quantity = Code.objects.filter(canape=canape).count()
+    used_quantity = Code.objects.filter(canape=canape, gainer__isnull=False).count()
     residual_quantity = canape.quantity - used_quantity
 
     context = {
