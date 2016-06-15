@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
-from .forms import CanapeNewForm, CanapeEditForm
+from .forms import CanapeNewForm, CanapeEditForm, CodeVerifyForm
 from .models import Canape, Code
 from .function import code_new
 
@@ -81,6 +81,26 @@ def canape_delete(request, canape_id):
     return HttpResponseRedirect(reverse("profile", kwargs={
         'username': request.user.username,
     }))
+
+@login_required
+def code_verify(request):
+    if request.method == "POST":
+        form = CodeVerifyForm(request.POST)
+        if form.is_valid():
+            try:
+                code = Code.objects.get(code=form.cleaned_data['code'])
+                code.gainer = request.user
+                code.save()
+            except:
+                return HttpResponseRedirect(reserse('profile', kwargs={
+                    'username': request.user.username,
+                }))
+    else:
+        form = CodeVerifyForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'code_verify.html', context)
 
 
 def code_detail(request, canape_id, code_serial):

@@ -95,3 +95,14 @@ class CanapeEditForm(forms.ModelForm):
     class Meta:
         model = Canape
         fields = ("title", "image", "description", "is_transferable",)
+
+
+class CodeVerifyForm(forms.Form):
+    code = forms.RegexField(
+        max_length=16,
+        regex=r'^[0-9a-fA-F]+$',
+        help_text = "Letters and digits only.",
+        widget=forms.TextInput(attrs={
+            'required': 'true',
+            'class': 'form-control',
+        }))
