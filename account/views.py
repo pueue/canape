@@ -38,15 +38,18 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             if user is not None:
-                auth_login(request, user)
-                return HttpResponseRedirect(reverse("home"))
-            else:
-                print("Wrong username or password")
-                return HttpResponseRedirect(reverse("login"))
+                if user.is_active:
+                    auth_login(request, user)
+                    return HttpResponseRedirect(reverse("home"))
+                else:
+                    return HttpResponseRedirect(reverse("home"))
+        error_message = "Incorrect username or password."
     else:
         form = LoginForm()
+        error_message = ''
     context = {
         'form': form,
+        'error_message': error_message,
     }
     return render(request, 'login.html', context)
 
