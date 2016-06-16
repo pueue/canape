@@ -1,15 +1,16 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.exceptions import ObjectDoesNotExist
 from .models import User
+from django.contrib.auth import authenticate
 
 
 class RegisterForm(UserCreationForm):
     username = forms.RegexField(
         label="Username",
         max_length=20,
-        regex=r'^[\w.@+-]+$',
-        help_text = "Required. 30 characters or fewer. Letters, digits and "
-        "@/./+/-/_ only.",
+        regex=r'^[\w.-]+$',
+        help_text = "20 characters or fewer. Letters, digits and ./-/_ only.",
         widget=forms.TextInput(attrs={
             'placeholder': 'Username',
             'required': 'true',
@@ -37,14 +38,13 @@ class RegisterForm(UserCreationForm):
             'class': 'form-control',
         }),)
     password2 = forms.CharField(
-        label="Password confirmation",
+        label="Password (again)",
         strip=False,
         widget=forms.PasswordInput(attrs={
-                'placeholder': 'Password confirmation',
+                'placeholder': 'Password (again)',
                 'required': 'true',
                 'class': 'form-control',
-        }),
-        help_text = "Enter the same password as above, for verification.")
+        }),)
 
     class Meta:    # ModelForm은 class Meta를 반드시 정의해줘야 한다.
         model = User
@@ -69,6 +69,20 @@ class LoginForm(AuthenticationForm):
             'required': 'true',
             'class': 'form-control',
         }))
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            self.add_error('username', 'No such username')
+            raise forms.ValidationError("No Such User Error")
+        password = self.cleaned_data.get('password')
+        self.user = authenticate(username=username, password=password)
+        if self.user is None or not self.user.is_active:
+            self.add_error('password', 'Password is incorrect')
+            raise forms.ValidationError('Incorrect Password Error')
+        return self.cleaned_data
 
 
 class SettingsForm(forms.ModelForm):

@@ -33,23 +33,13 @@ def register_confirm(request):
 
 
 def login(request):
+    form = LoginForm(data=request.POST or None)
     if request.method == "POST":
-        form = LoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            if user is not None:
-                if user.is_active:
-                    auth_login(request, user)
-                    return HttpResponseRedirect(reverse("home"))
-                else:
-                    return HttpResponseRedirect(reverse("home"))
-        error_message = "Incorrect username or password."
-    else:
-        form = LoginForm()
-        error_message = ''
+            auth_login(request, form.user)
+            return HttpResponseRedirect(reverse("home"))
     context = {
         'form': form,
-        'error_message': error_message,
     }
     return render(request, 'login.html', context)
 
