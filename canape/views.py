@@ -8,6 +8,7 @@ from .forms import CanapeNewForm, CanapeEditForm, CodeVerifyForm
 from .models import Canape, Code
 from .function import code_new
 
+
 @transaction.atomic
 @login_required
 def canape_new(request):
@@ -20,13 +21,14 @@ def canape_new(request):
                     canape = form.save(commit=False)
                     canape.maker = request.user
                     canape.save()
-                    codes = code_new(canape, canape.quantity)
-                    for serial, code in enumerate(codes):
-                        Code.objects.create(
-                            canape=canape,
-                            code=code,
-                            serial=serial+1,
-                        )
+                    if canape.is_limit:
+                        codes = code_new(canape, canape.quantity)
+                        for serial, code in enumerate(codes):
+                            Code.objects.create(
+                                canape=canape,
+                                code=code,
+                                serial=serial+1,
+                            )
             except:
                 return redirect('home')
             return HttpResponseRedirect(reverse("canape_detail", kwargs={
@@ -40,7 +42,8 @@ def canape_new(request):
 
 def canape_detail(request, canape_id):
     canape = get_object_or_404(Canape, id=canape_id)
-    used_quantity = Code.objects.filter(canape=canape, gainer__isnull=False).count()
+    used_quantity = Code.objects.filter(
+        canape=canape, gainer__isnull=False).count()
     residual_quantity = canape.quantity - used_quantity
 
     context = {
@@ -82,6 +85,7 @@ def canape_delete(request, canape_id):
         'username': request.user.username,
     }))
 
+
 @login_required
 def code_verify(request):
     if request.method == "POST":
@@ -92,7 +96,7 @@ def code_verify(request):
                 code.gainer = request.user
                 code.save()
             except:
-                return HttpResponseRedirect(reserse('profile', kwargs={
+                return HttpResponseRedirect(reverse('profile', kwargs={
                     'username': request.user.username,
                 }))
     else:

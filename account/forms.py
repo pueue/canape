@@ -10,7 +10,7 @@ class RegisterForm(UserCreationForm):
         label="Username",
         max_length=20,
         regex=r'^[\w.-]+$',
-        help_text = "20 characters or fewer. Letters, digits and ./-/_ only.",
+        help_text="20 characters or fewer. Letters, digits and ./-/_ only.",
         widget=forms.TextInput(attrs={
             'placeholder': 'Username',
             'required': 'true',
@@ -73,7 +73,7 @@ class LoginForm(AuthenticationForm):
     def clean(self):
         username = self.cleaned_data.get('username')
         try:
-            user = User.objects.get(username=username)
+            self.user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             self.add_error('username', 'No such username')
             raise forms.ValidationError("No Such User Error")
