@@ -2,7 +2,7 @@ from django import forms
 from .models import Canape
 
 
-class CanapeNewForm(forms.ModelForm):
+class NewCanapeForm(forms.ModelForm):
     title = forms.CharField(
         label="Title",
         max_length=200,
@@ -63,7 +63,7 @@ class CanapeNewForm(forms.ModelForm):
                 self.add_error(field, msg)
 
 
-class CanapeEditForm(forms.ModelForm):
+class EditCanapeForm(forms.ModelForm):
     title = forms.CharField(
         label="Title",
         max_length=200,
@@ -97,11 +97,11 @@ class CanapeEditForm(forms.ModelForm):
         fields = ("title", "image", "description", "is_transferable",)
 
 
-class CodeVerifyForm(forms.Form):
+class VerifyCodeForm(forms.Form):
     code = forms.RegexField(
         max_length=16,
         regex=r'^[0-9a-fA-F]+$',
-        help_text = "Letters and digits only.",
+        help_text="Letters and digits only.",
         widget=forms.TextInput(attrs={
             'required': 'true',
             'class': 'form-control',

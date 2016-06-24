@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
-from .forms import CanapeNewForm, CanapeEditForm, CodeVerifyForm
+from .forms import NewCanapeForm, EditCanapeForm, VerifyCodeForm
 from .models import Canape, Code
 from .function import code_new
 
@@ -12,9 +12,9 @@ from .function import code_new
 @transaction.atomic
 @login_required
 def canape_new(request):
-    form = CanapeNewForm()
+    form = NewCanapeForm()
     if request.method == "POST":
-        form = CanapeNewForm(request.POST, request.FILES)
+        form = NewCanapeForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 with transaction.atomic():
@@ -60,14 +60,14 @@ def canape_edit(request, canape_id):
         return redirect('home')
 
     if request.method == "POST":
-        form = CanapeEditForm(request.POST, request.FILES, instance=canape)
+        form = EditCanapeForm(request.POST, request.FILES, instance=canape)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse("canape_detail", kwargs={
                 'canape_id': canape.id,
             }))
     else:
-        form = CanapeEditForm(instance=canape)
+        form = EditCanapeForm(instance=canape)
     context = {
         'canape': canape,
         'form': form,
@@ -89,7 +89,7 @@ def canape_delete(request, canape_id):
 @login_required
 def code_verify(request):
     if request.method == "POST":
-        form = CodeVerifyForm(request.POST)
+        form = VerifyCodeForm(request.POST)
         if form.is_valid():
             try:
                 code = Code.objects.get(code=form.cleaned_data['code'])
@@ -100,7 +100,7 @@ def code_verify(request):
                     'username': request.user.username,
                 }))
     else:
-        form = CodeVerifyForm()
+        form = VerifyCodeForm()
     context = {
         'form': form,
     }
