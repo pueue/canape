@@ -1,5 +1,6 @@
 from django import forms
 from .models import Canape
+from .fields import MultiEmailField
 
 
 class NewCanapeForm(forms.ModelForm):
@@ -105,4 +106,14 @@ class VerifyCodeForm(forms.Form):
         widget=forms.TextInput(attrs={
             'required': 'true',
             'class': 'form-control',
-        }))
+        })
+    )
+
+
+class DistributeCodeForm(forms.Form):
+    emails = MultiEmailField(
+        widget=forms.Textarea(attrs={
+            'required': 'true',
+            'class': 'form-control',
+        })
+    )

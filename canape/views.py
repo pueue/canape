@@ -4,9 +4,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
-from .forms import NewCanapeForm, EditCanapeForm, VerifyCodeForm
+from .forms import NewCanapeForm, EditCanapeForm, VerifyCodeForm, DistributeCodeForm
 from .models import Canape, Code
-from .function import code_new
+from .function import generate_code, distribute_code
 
 
 @transaction.atomic
@@ -22,13 +22,7 @@ def canape_new(request):
                     canape.maker = request.user
                     canape.save()
                     if canape.is_limit:
-                        codes = code_new(canape, canape.quantity)
-                        for serial, code in enumerate(codes):
-                            Code.objects.create(
-                                canape=canape,
-                                code=code,
-                                serial=serial+1,
-                            )
+                        generate_code(canape, canape.quantity)
             except:
                 return redirect('home')
             return HttpResponseRedirect(reverse("canape_detail", kwargs={
@@ -46,9 +40,18 @@ def canape_detail(request, canape_id):
         canape=canape, gainer__isnull=False).count()
     residual_quantity = canape.quantity - used_quantity
 
+    if request.method == "POST":
+        form = DistributeCodeForm(request.POST)
+        if form.is_valid():
+            emails = form.cleaned_data['emails']
+            distribute_code(canape, emails)
+            return redirect('home')
+    else:
+        form = DistributeCodeForm()
     context = {
         'canape': canape,
         'residual_quantity': residual_quantity,
+        'form': form,
     }
     return render(request, 'canape_detail.html', context)
 
