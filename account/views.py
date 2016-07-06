@@ -9,18 +9,16 @@ from django.contrib.auth.decorators import login_required
 
 
 def register(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            User.objects.create_user(
-                email=form.cleaned_data['email'],
-                username=form.cleaned_data['username'],
-                name=form.cleaned_data['name'],
-                password=form.cleaned_data['password1'],
-            )
-            return HttpResponseRedirect(reverse("register_confirm"))
-    else:
-        form = RegisterForm()
+    form = RegisterForm(data=request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        User.objects.create_user(
+            email=form.cleaned_data['email'],
+            username=form.cleaned_data['username'],
+            name=form.cleaned_data['name'],
+            password=form.cleaned_data['password1'],
+        )
+        return HttpResponseRedirect(reverse("register_confirm"))
+
     context = {
         'form': form,
     }
@@ -34,10 +32,10 @@ def register_confirm(request):
 
 def login(request):
     form = LoginForm(data=request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            auth_login(request, form.user)
-            return HttpResponseRedirect(reverse("home"))
+    if request.method == "POST" and form.is_valid():
+        auth_login(request, form.user)
+        return HttpResponseRedirect(reverse("home"))
+
     context = {
         'form': form,
     }
@@ -59,15 +57,13 @@ def profile(request, username):
 
 @login_required
 def settings(request):
-    if request.method == "POST":
-        form = SettingsForm(data=request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("profile", kwargs={
-                'username': request.user.username,
-            }))
-    else:
-        form = SettingsForm(instance=request.user)
+    form = SettingsForm(data=request.POST or None, instance=request.user)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse("profile", kwargs={
+            'username': request.user.username,
+        }))
+
     context = {
         'form': form,
     }

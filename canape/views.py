@@ -12,22 +12,21 @@ from .function import generate_code, distribute_code
 @transaction.atomic
 @login_required
 def canape_new(request):
-    form = NewCanapeForm()
-    if request.method == "POST":
-        form = NewCanapeForm(request.POST, request.FILES)
-        if form.is_valid():
-            try:
-                with transaction.atomic():
-                    canape = form.save(commit=False)
-                    canape.maker = request.user
-                    canape.save()
-                    if canape.is_limit:
-                        generate_code(canape, canape.quantity)
-            except:
-                return redirect('home')
-            return HttpResponseRedirect(reverse("canape_detail", kwargs={
-                'canape_id': canape.id,
-            }))
+    form = NewCanapeForm(request.POST or None, request.FILES or None)
+    if request.method == "POST" and form.is_valid():
+        try:
+            with transaction.atomic():
+                canape = form.save(commit=False)
+                canape.maker = request.user
+                canape.save()
+                if canape.is_limit:
+                    generate_code(canape, canape.quantity)
+        except:
+            return redirect('home')
+        return HttpResponseRedirect(reverse("canape_detail", kwargs={
+            'canape_id': canape.id,
+        }))
+
     context = {
         'form': form,
     }
@@ -36,18 +35,15 @@ def canape_new(request):
 
 def canape_detail(request, canape_id):
     canape = get_object_or_404(Canape, id=canape_id)
-    used_quantity = Code.objects.filter(
-        canape=canape, gainer__isnull=False).count()
+    used_quantity = Code.objects.filter(canape=canape, gainer__isnull=False).count()
     residual_quantity = canape.quantity - used_quantity
+    form = DistributeCodeForm(request.POST or None)
 
-    if request.method == "POST":
-        form = DistributeCodeForm(request.POST)
-        if form.is_valid():
-            emails = form.cleaned_data['emails']
-            distribute_code(canape, emails)
-            return redirect('home')
-    else:
-        form = DistributeCodeForm()
+    if request.method == "POST" and form.is_valid():
+        emails = form.cleaned_data['emails']
+        distribute_code(canape, emails)
+        return redirect('home')
+
     context = {
         'canape': canape,
         'residual_quantity': residual_quantity,
@@ -61,16 +57,14 @@ def canape_edit(request, canape_id):
     canape = get_object_or_404(Canape, id=canape_id)
     if canape.maker != request.user:
         return redirect('home')
+    form = EditCanapeForm(request.POST or None, request.FILES or None, instance=canape)
 
-    if request.method == "POST":
-        form = EditCanapeForm(request.POST, request.FILES, instance=canape)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("canape_detail", kwargs={
-                'canape_id': canape.id,
-            }))
-    else:
-        form = EditCanapeForm(instance=canape)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse("canape_detail", kwargs={
+            'canape_id': canape.id,
+        }))
+
     context = {
         'canape': canape,
         'form': form,
@@ -91,19 +85,17 @@ def canape_delete(request, canape_id):
 
 @login_required
 def code_verify(request):
-    if request.method == "POST":
-        form = VerifyCodeForm(request.POST)
-        if form.is_valid():
-            try:
-                code = Code.objects.get(code=form.cleaned_data['code'])
-                code.gainer = request.user
-                code.save()
-            except:
-                return HttpResponseRedirect(reverse('profile', kwargs={
-                    'username': request.user.username,
-                }))
-    else:
-        form = VerifyCodeForm()
+    form = VerifyCodeForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        try:
+            code = Code.objects.get(code=form.cleaned_data['code'])
+            code.gainer = request.user
+            code.save()
+        except:
+            return HttpResponseRedirect(reverse('profile', kwargs={
+                'username': request.user.username,
+            }))
+
     context = {
         'form': form,
     }
