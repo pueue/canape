@@ -1,43 +1,61 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock css %}
+
 {% block content %}
-<div class="profile">
-    <h1 class="profile_name">{{ user.name }} <small>{{ user.username }}</small></h1>
-    <div class="profile_email">{{ user.email }}</div>
-    <div class="profile_image">
+<div>
+    <h1>{{ user.name }} <small>{{ user.username }}</small></h1>
+    <div>{{ user.email }}</div>
+    <div>
         {% if user.image %}
         <img src="{{ user.image.url }}" alt="" />
         {% endif %}
     </div>
-    <div class="profile_description">{{ user.description }}</div>
+    <div>{{ user.description }}</div>
 </div>
 
-<div class="achievements">
+<div>
     <h3>Achievements</h3>
-    <div class="achievement_list row">
+    <div class="row">
         {% for code in achievements %}
-        <a href="{% url 'code_detail' canape_id=code.canape.id code_serial=code.serial %}">
-            <div class="achievement col-sm-2 col-md-2">
-                <div><img class="img-responsive" src="{{ code.canape.image.url }}" alt="{{ code.canape.description }}" /></div>
-                <h5 class="text-center">{{ code.canape.title }}</h5>
-            </div>
-        </a>
+        <div class="col-sm-2 col-md-2">
+            <a href="{% url 'code_detail' canape_id=code.canape.id code_serial=code.serial %}">
+                <div class="canape">
+                    <div><img class="img-responsive" src="{{ code.canape.image.url }}" alt="{{ code.canape.description }}" /></div>
+                    <h5 class="text-center">{{ code.canape.title }}</h5>
+                </div>
+            </a>
+        </div>
         {% endfor %}
     </div>
 </div>
 
-<div class="works">
+<div>
     <h3>Works</h3>
-    <a href="{% url 'canape_new' %}" class="btn btn-primary" role="button">Create</a>
-    <div class="work_list row">
+    <!-- <a href="{% url 'canape_new' %}" class="btn btn-primary" role="button">Create</a> -->
+    <div class="row">
         {% for canape in works %}
-        <a href="{% url 'canape_detail' canape_id=canape.id %}">
-            <div class="work col-sm-2 col-md-2">
-                <div><img class="img-responsive" src="{{ canape.image.url }}" alt="{{ canape.description }}" /></div>
-                <h5 class="text-center">{{ canape.title }}</h5>
-            </div>
-        </a>
+        <div class="col-sm-2 col-md-2">
+            <a href="{% url 'canape_detail' canape_id=canape.id %}">
+                <div class="canape">
+                    <div><img class="img-responsive" src="{{ canape.image.url }}" alt="{{ canape.description }}" /></div>
+                    <h5 class="text-center">{{ canape.title }}</h5>
+                </div>
+            </a>
+        </div>
+
         {% endfor %}
+        <div class="col-sm-2 col-md-2">
+            <a href="{% url 'canape_new' %}">
+                <div class="canape">
+                    <div><img class="img-responsive" src="{% static 'new_canape.png' %}" /></div>
+                    <h5 class="text-center">New Canape</h5>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
